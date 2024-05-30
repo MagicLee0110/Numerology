@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>三位數匹配</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>三位數匹配</h1>
+        <div class="input-group">
+            <label for="sum">十位數+百位數相加總合 (A):</label>
+            <input type="number" id="sum" required>
+        </div>
+        <div class="input-group">
+            <label for="product">十位數+個位數相加總合 (B):</label>
+            <input type="number" id="product" required>
+        </div>
+        <button onclick="findMatchingNumbers()">提交</button>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        const numbers = [
+            103, 105, 110, 115, 117, 122, 127, 129, 134, 136, 
+            139, 141, 146, 148, 151, 153, 158, 160, 163, 165,
+            167, 170, 172, 175, 177, 179, 182, 184, 189, 191,
+            194, 196, 198, 201, 203, 206, 208, 210, 213, 215,
+            220, 222, 225, 227, 229, 232, 234, 237, 239, 241,
+            244, 246, 251, 253, 256, 258, 260, 263, 265, 268,
+            270, 272, 275, 277, 282, 284, 287, 289, 291, 294,
+            296, 299, 301, 303, 306, 308, 313, 315, 318, 320,
+            322, 325, 327, 330, 332, 334, 337, 339, 344, 346,
+            349, 351, 353, 356, 358, 361, 363, 365, 368, 370,
+            375, 377, 380, 382, 384, 387, 389, 392, 394, 396,
+            399, 401, 406, 408, 411, 413, 415, 418, 420, 423,
+            425, 427, 430, 432, 437, 439, 442, 444, 446, 449,
+            451, 454, 456, 458, 461, 463, 468, 470, 473, 475,
+            477, 480, 482, 485, 487, 489, 492, 494, 499, 501,
+            504, 506, 508, 511, 513, 516, 518, 520, 523, 525,
+            530, 532, 535, 537, 539, 542, 544, 547, 549, 551,
+            554, 556, 561, 563, 566, 568, 570, 573, 575, 578,
+            580, 582, 585, 587, 592, 594, 597, 599, 601, 604,
+            606, 609, 611, 613, 616, 618, 623, 625, 628, 630,
+            632, 635, 637, 640, 642, 644, 647, 649, 654, 656,
+            659, 661, 663, 666, 668, 671, 673, 675, 678, 680,
+            685, 687, 690, 692, 694, 697, 699, 702, 704, 706,
+            709, 711, 716, 718, 721, 723, 725, 728, 730, 733,
+            735, 737, 740, 742, 747, 749, 752, 754, 756, 759,
+            761, 764, 766, 768, 771, 773, 778, 780, 783, 787,
+            790, 792, 795, 797, 799, 802, 804, 809, 811, 814,
+            816, 818, 821, 823, 826, 828, 830, 833, 835, 840,
+            842, 845, 847, 849, 852, 854, 857, 859, 861, 864,
+            866, 871, 873, 876, 878, 880, 883, 885, 888, 890,
+            892, 895, 897, 902, 904, 907, 909, 911, 914, 916,
+            919, 921, 926, 928, 933, 935, 938, 940, 942, 945,
+            947, 950, 952, 957, 959, 964, 966, 969, 971, 973,
+            976, 978, 981, 983, 988, 990, 995, 997, 
+            // ... Add all 300 numbers here
+        ];
+
+        function findMatchingNumbers() {
+            const sumInput = document.getElementById('sum').value;
+            const productInput = document.getElementById('product').value;
+            const resultDiv = document.getElementById('result');
+            const sum = parseInt(sumInput, 10);
+            const product = parseInt(productInput, 10);
+
+            const matches = numbers.filter(num => {
+                const digits = String(num).padStart(3, '0').split('').map(Number);
+                const hundredDigit = digits[0];
+                const tenDigit = digits[1];
+                const unitDigit = digits[2];
+
+                const a = hundredDigit + tenDigit;
+                const b = tenDigit + unitDigit;
+                return a === sum && b === product;
+            });
+
+            if (matches.length > 0) {
+                resultDiv.innerHTML = `匹配的數字: ${matches.join(', ')}`;
+                if (matches.includes(103)) {
+                    resultDiv.innerHTML += '<br>6月1日、雙子座';
+                }
+                if (matches.includes(105)) {
+                    resultDiv.innerHTML += '<br>1月3日、魔羯座';
+                }
+                if (matches.includes(110)) {
+                    resultDiv.innerHTML += '<br>4月2日、白羊座';
+                }
+                if (matches.includes(115)) {
+                    resultDiv.innerHTML += '<br>7月1日、巨蟹座';
+                }
+                if (matches.includes(117)) {
+                    resultDiv.innerHTML += '<br>2月3日、水平座';
+                }
+                if (matches.includes(122)) {
+                    resultDiv.innerHTML += '<br>5月2日、金牛座';
+                }
+                if (matches.includes(127)) {
+                    resultDiv.innerHTML += '<br>8月1日、獅子座';
+                }
+                if (matches.includes(129)) {
+                    resultDiv.innerHTML += '<br>3月3日、雙魚座';
+                }
+                if (matches.includes(134)) {
+                    resultDiv.innerHTML += '<br>6月2日、雙子座';
+                }
+                if (matches.includes(136)) {
+                    resultDiv.innerHTML += '<br>1月4日、摩羯座';
+                }
+                if (matches.includes(139)) {
+                    resultDiv.innerHTML += '<br>9月1日、處女座';
+                }
+                if (matches.includes(141)) {
+                    resultDiv.innerHTML += '<br>4月3日、白羊座';
+                }
+                if (matches.includes(146)) {
+                    resultDiv.innerHTML += '<br>7月2日、巨蟹座';
+                }
+                if (matches.includes(148)) {
+                    resultDiv.innerHTML += '<br>2月4日、水瓶座';
+                }
+                if (matches.includes(151)) {
+                    resultDiv.innerHTML += '<br>10月1日、天秤座';
+                }
+                if (matches.includes(153)) {
+                    resultDiv.innerHTML += '<br>5月3日、金牛座';
+                }
+                if (matches.includes(158)) {
+                    resultDiv.innerHTML += '<br>8月2日、獅子座';
+                }
+                if (matches.includes(160)) {
+                    resultDiv.innerHTML += '<br>3月4日、雙魚座';
+                }
+                if (matches.includes(163)) {
+                    resultDiv.innerHTML += '<br>11月1日、天蠍座';
+                }
+                if (matches.includes(165)) {
+                    resultDiv.innerHTML += '<br>6月3日、雙子座';
+                }
+                if (matches.includes(167)) {
+                    resultDiv.innerHTML += '<br>1月5日、摩羯座';
+                }
+                if (matches.includes(170)) {
+                    resultDiv.innerHTML += '<br>9月2日、處女座';
+                }
+                if (matches.includes(172)) {
+                    resultDiv.innerHTML += '<br>4月4日、白羊座';
+                }
+                if (matches.includes(175)) {
+                    resultDiv.innerHTML += '<br>12月1日、射手座';
+                }
+                if (matches.includes(177)) {
+                    resultDiv.innerHTML += '<br>7月3日、巨蟹座';
+                }
+                if (matches.includes(179)) {
+                    resultDiv.innerHTML += '<br>2月5日、水瓶座';
+                }
+                if (matches.includes(182)) {
+                    resultDiv.innerHTML += '<br>10月2日、天秤座';
+                }
+                if (matches.includes(184)) {
+                    resultDiv.innerHTML += '<br>5月4日、金牛座';
+                }
+                if (matches.includes(189)) {
+                    resultDiv.innerHTML += '<br>8月3日、獅子座';
+                }
+                if (matches.includes(191)) {
+                    resultDiv.innerHTML += '<br>3月5日、雙魚座';
+                }
+                if (matches.includes(194)) {
+                    resultDiv.innerHTML += '<br>11月2日、天蠍座';
+                }
+                if (matches.includes(196)) {
+                    resultDiv.innerHTML += '<br>6月4日、雙子座';
+                }
+                if (matches.includes(198)) {
+                    resultDiv.innerHTML += '<br>1月6日、摩羯座';
+                }
+                if (matches.includes(201)) {
+                    resultDiv.innerHTML += '<br>9月3日、處女座';
+                }
+                if (matches.includes(203)) {
+                    resultDiv.innerHTML += '<br>4月5日、白羊座';
+                }
+                if (matches.includes(206)) {
+                    resultDiv.innerHTML += '<br>12月2日、射手座';
+                }
+                if (matches.includes(208)) {
+                    resultDiv.innerHTML += '<br>7月4日、巨蟹座';
+                }
+                if (matches.includes(210)) {
+                    resultDiv.innerHTML += '<br>2月6日、水瓶座';
+                }
+                if (matches.includes(213)) {
+                    resultDiv.innerHTML += '<br>10月3日、天秤座';
+                }
+                if (matches.includes(215)) {
+                    resultDiv.innerHTML += '<br>5月5日、金牛座';
+                }
+                if (matches.includes(220)) {
+                    resultDiv.innerHTML += '<br>8月4日、獅子座';
+                }
+                if (matches.includes(222)) {
+                    resultDiv.innerHTML += '<br>3月6日、雙魚座';
+                }
+                if (matches.includes(225)) {
+                    resultDiv.innerHTML += '<br>11月3日、天蠍座';
+                }
+                if (matches.includes(227)) {
+                    resultDiv.innerHTML += '<br>6月5日、雙子座';
+                }
+                if (matches.includes(229)) {
+                    resultDiv.innerHTML += '<br>1月7日、摩羯座';
+                }
+                if (matches.includes(232)) {
+                    resultDiv.innerHTML += '<br>9月4日、處女座';
+                }
+                if (matches.includes(234)) {
+                    resultDiv.innerHTML += '<br>4月6日、白羊座';
+                }
+                if (matches.includes(237)) {
+                    resultDiv.innerHTML += '<br>12月3日、射手座';
+                }
+                if (matches.includes(239)) {
+                    resultDiv.innerHTML += '<br>7月5日、巨蠍座';
+                }
+                if (matches.includes(241)) {
+                    resultDiv.innerHTML += '<br>2月7日、水瓶座';
+                }
+                if (matches.includes(244)) {
+                    resultDiv.innerHTML += '<br>10月4日、天秤座';
+                }
+                if (matches.includes(246)) {
+                    resultDiv.innerHTML += '<br>5月6日、金牛座';
+                }
+                if (matches.includes(251)) {
+                    resultDiv.innerHTML += '<br>8月5日、獅子座';
+                }
+                if (matches.includes(253)) {
+                    resultDiv.innerHTML += '<br>3月7日、雙魚座';
+                }
+                if (matches.includes(256)) {
+                    resultDiv.innerHTML += '<br>11月4日、天蠍座';
+                }
+                if (matches.includes(258)) {
+                    resultDiv.innerHTML += '<br>6月6日、雙子座';
+                }
+                if (matches.includes(260)) {
+                    resultDiv.innerHTML += '<br>1月8日、摩羯座';
+                }
+                if (matches.includes(263)) {
+                    resultDiv.innerHTML += '<br>9月5日、處女座';
+                }
+                if (matches.includes(265)) {
+                    resultDiv.innerHTML += '<br>4月7日、白羊座';
+                }
+                if (matches.includes(268)) {
+                    resultDiv.innerHTML += '<br>12月4日、射手座';
+                }
+                if (matches.includes(270)) {
+                    resultDiv.innerHTML += '<br>7月6日、巨蟹座';
+                }
+                if (matches.includes(272)) {
+                    resultDiv.innerHTML += '<br>2月8日、水瓶座';
+                }
+                if (matches.includes(275)) {
+                    resultDiv.innerHTML += '<br>10月5日、天秤座';
+                }
+                if (matches.includes(277)) {
+                    resultDiv.innerHTML += '<br>5月7日、金牛座';
+                }
+                if (matches.includes(282)) {
+                    resultDiv.innerHTML += '<br>8月6日、獅子座';
+                }
+                if (matches.includes(284)) {
+                    resultDiv.innerHTML += '<br>3月8日、雙魚座';
+                }
+                if (matches.includes(287)) {
+                    resultDiv.innerHTML += '<br>11月5日、天蠍座';
+                }
+                if (matches.includes(289)) {
+                    resultDiv.innerHTML += '<br>6月7日、雙子座';
+                }
+                if (matches.includes(291)) {
+                    resultDiv.innerHTML += '<br>1月9日、摩羯座';
+                }
+                if (matches.includes(294)) {
+                    resultDiv.innerHTML += '<br>9月6日、處女座';
+                }
+                if (matches.includes(296)) {
+                    resultDiv.innerHTML += '<br>4月8日、白羊座';
+                }
+                if (matches.includes(299)) {
+                    resultDiv.innerHTML += '<br>12月5日、射手座';
+                }
+                if (matches.includes(301)) {
+                    resultDiv.innerHTML += '<br>7月7日、巨蟹座';
+                }
+                if (matches.includes(303)) {
+                    resultDiv.innerHTML += '<br>2月9日、水瓶座';
+                }
+                if (matches.includes(306)) {
+                    resultDiv.innerHTML += '<br>10月6日、天秤座';
+                }
+                if (matches.includes(308)) {
+                    resultDiv.innerHTML += '<br>5月8日、金牛座';
+                }
+                if (matches.includes(313)) {
+                    resultDiv.innerHTML += '<br>8月7日、獅子座';
+                }
+                if (matches.includes(315)) {
+                    resultDiv.innerHTML += '<br>3月9日、雙魚座';
+                }
+                if (matches.includes(318)) {
+                    resultDiv.innerHTML += '<br>11月6日、天蠍座';
+                }
+                if (matches.includes(320)) {
+                    resultDiv.innerHTML += '<br>12月6日、射手座';
+                }
+                if (matches.includes(322)) {
+                    resultDiv.innerHTML += '<br>1月10日、摩羯座';
+                }
+                if (matches.includes(334)) {
+                    resultDiv.innerHTML += '<br>2月10日、水瓶座';
+                }
+                if (matches.includes(337)) {
+                    resultDiv.innerHTML += '<br>10月7日、天秤座';
+                }
+                if (matches.includes(339)) {
+                    resultDiv.innerHTML += '<br>5月9日、金牛座';
+                }
+                if (matches.includes(344)) {
+                    resultDiv.innerHTML += '<br>8月8日、獅子座';
+                }
+                if (matches.includes(346)) {
+                    resultDiv.innerHTML += '<br>3月10日、雙魚座';
+                }
+                if (matches.includes(349)) {
+                    resultDiv.innerHTML += '<br>11月7日、天蠍座';
+                }
+                if (matches.includes(351)) {
+                    resultDiv.innerHTML += '<br>6月9日、雙子座';
+                }
+                if (matches.includes(353)) {
+                    resultDiv.innerHTML += '<br>11月1日、摩羯座';
+                }
+                if (matches.includes(356)) {
+                    resultDiv.innerHTML += '<br>9月8日、處女座';
+                }
+                if (matches.includes(358)) {
+                    resultDiv.innerHTML += '<br>4月10日、白羊座';
+                }
+                if (matches.includes(361)) {
+                    resultDiv.innerHTML += '<br>12月7日、射手座';
+                }
+                if (matches.includes(363)) {
+                    resultDiv.innerHTML += '<br>7月9日、巨蠍座';
+                }
+                if (matches.includes(365)) {
+                    resultDiv.innerHTML += '<br>2月11日、水瓶座';
+                }
+                if (matches.includes(368)) {
+                    resultDiv.innerHTML += '<br>10月8日、天秤座';
+                }
+                if (matches.includes(370)) {
+                    resultDiv.innerHTML += '<br>5月10日、金牛座';
+                }
+                if (matches.includes(375)) {
+                    resultDiv.innerHTML += '<br>8月9日、獅子座';
+                }
+                if (matches.includes(377)) {
+                    resultDiv.innerHTML += '<br>3月11日、雙魚座';
+                }
+                if (matches.includes(380)) {
+                    resultDiv.innerHTML += '<br>11月8日、天蠍座';
+                }
+                if (matches.includes(382)) {
+                    resultDiv.innerHTML += '<br>6月10日、雙子座';
+                }
+                if (matches.includes(384)) {
+                    resultDiv.innerHTML += '<br>1月12日、摩羯座';
+                }
+                if (matches.includes(387)) {
+                    resultDiv.innerHTML += '<br>9月9日、處女座';
+                }
+                if (matches.includes(389)) {
+                    resultDiv.innerHTML += '<br>4月11日、白羊座';
+                }
+                if (matches.includes(392)) {
+                    resultDiv.innerHTML += '<br>12月8日、射手座';
+                }
+                if (matches.includes(394)) {
+                    resultDiv.innerHTML += '<br>7月10日、巨蠍座';
+                }
+                if (matches.includes(396)) {
+                    resultDiv.innerHTML += '<br>2月12日、水瓶座';
+                }
+                if (matches.includes(399)) {
+                    resultDiv.innerHTML += '<br>10月9日、天秤座';
+                }
+                if (matches.includes(401)) {
+                    resultDiv.innerHTML += '<br>5月11日、金牛座';
+                }
+                if (matches.includes(406)) {
+                    resultDiv.innerHTML += '<br>8月10日、獅子座';
+                }
+                if (matches.includes(408)) {
+                    resultDiv.innerHTML += '<br>3月12日、雙魚座';
+                }
+                if (matches.includes(411)) {
+                    resultDiv.innerHTML += '<br>11月9日、天蠍座';
+                }
+                if (matches.includes(413)) {
+                    resultDiv.innerHTML += '<br>6月11日、雙子座';
+                }
+                if (matches.includes(415)) {
+                    resultDiv.innerHTML += '<br>1月13日、摩羯座';
+                }
+                if (matches.includes(418)) {
+                    resultDiv.innerHTML += '<br>9月10日、處女座';
+                }
+                if (matches.includes(420)) {
+                    resultDiv.innerHTML += '<br>10月10日、白羊座';
+                }
+                if (matches.includes(423)) {
+                    resultDiv.innerHTML += '<br>12月9日、射手座';
+                }
+                if (matches.includes(425)) {
+                    resultDiv.innerHTML += '<br>7月11日、巨蠍座';
+                }
+                if (matches.includes(427)) {
+                    resultDiv.innerHTML += '<br>2月13日、水瓶座';
+                }
+                if (matches.includes(430)) {
+                    resultDiv.innerHTML += '<br>10月10日、天秤座';
+                }
+                if (matches.includes(432)) {
+                    resultDiv.innerHTML += '<br>5月12日、金牛座';
+                }
+                if (matches.includes(437)) {
+                    resultDiv.innerHTML += '<br>8月11日、獅子座';
+                }
+                if (matches.includes(439)) {
+                    resultDiv.innerHTML += '<br>3月13日、雙魚座';
+                }
+                if (matches.includes(442)) {
+                    resultDiv.innerHTML += '<br>11月10日、天蠍座';
+                }
+                if (matches.includes(444)) {
+                    resultDiv.innerHTML += '<br>6月12日、雙子座';
+                }
+                if (matches.includes(446)) {
+                    resultDiv.innerHTML += '<br>1月14日、摩羯座';
+                }
+                if (matches.includes(449)) {
+                    resultDiv.innerHTML += '<br>9月11日、處女座';
+                }
+                if (matches.includes(451)) {
+                    resultDiv.innerHTML += '<br>4月13日、白羊座';
+                }
+                if (matches.includes(454)) {
+                    resultDiv.innerHTML += '<br>12月10日、射手座';
+                }
+                if (matches.includes(456)) {
+                    resultDiv.innerHTML += '<br>7月12日、巨蠍座';
+                }
+                if (matches.includes(458)) {
+                    resultDiv.innerHTML += '<br>2月14日、水瓶座';
+                }
+                if (matches.includes(461)) {
+                    resultDiv.innerHTML += '<br>10月11日、天秤座';
+                }
+                if (matches.includes(463)) {
+                    resultDiv.innerHTML += '<br>5月13日、金牛座';
+                }
+                if (matches.includes(468)) {
+                    resultDiv.innerHTML += '<br>8月12日、獅子座';
+                }
+                if (matches.includes(470)) {
+                    resultDiv.innerHTML += '<br>3月14日、雙魚座';
+                }
+                if (matches.includes(473)) {
+                    resultDiv.innerHTML += '<br>11月11日、天蠍座';
+                }
+                if (matches.includes(475)) {
+                    resultDiv.innerHTML += '<br>6月13日、雙子座';
+                }
+                if (matches.includes(477)) {
+                    resultDiv.innerHTML += '<br>1月15日、摩羯座';
+                }
+                if (matches.includes(480)) {
+                    resultDiv.innerHTML += '<br>9月12日、處女座';
+                }
+                if (matches.includes(482)) {
+                    resultDiv.innerHTML += '<br>4月14日、白羊座';
+                }
+                if (matches.includes(485)) {
+                    resultDiv.innerHTML += '<br>12月11日、射手座';
+                }
+                if (matches.includes(487)) {
+                    resultDiv.innerHTML += '<br>7月13日、巨蠍座';
+                }
+                if (matches.includes(489)) {
+                    resultDiv.innerHTML += '<br>2月15日、水瓶座';
+                }
+                if (matches.includes(492)) {
+                    resultDiv.innerHTML += '<br>10月12日、天秤座';
+                }
+                if (matches.includes(494)) {
+                    resultDiv.innerHTML += '<br>5月14日、金牛座';
+                }
+                if (matches.includes(499)) {
+                    resultDiv.innerHTML += '<br>8月13日、獅子座';
+                }
+                if (matches.includes(501)) {
+                    resultDiv.innerHTML += '<br>3月15日、雙魚座';
+                }
+                if (matches.includes(504)) {
+                    resultDiv.innerHTML += '<br>11月12日、天蠍座';
+                }
+                if (matches.includes(506)) {
+                    resultDiv.innerHTML += '<br>6月14日、雙子座';
+                }
+                if (matches.includes(508)) {
+                    resultDiv.innerHTML += '<br>1月16日、摩羯座';
+                }
+                if (matches.includes(511)) {
+                    resultDiv.innerHTML += '<br>9月13日、處女座';
+                }
+                if (matches.includes(513)) {
+                    resultDiv.innerHTML += '<br>4月15日、白羊座';
+                }
+                if (matches.includes(516)) {
+                    resultDiv.innerHTML += '<br>12月12日、射手座';
+                }
+                if (matches.includes(518)) {
+                    resultDiv.innerHTML += '<br>7月14日、巨蠍座';
+                }
+                if (matches.includes(520)) {
+                    resultDiv.innerHTML += '<br>2月16日、水瓶座';
+                }
+                if (matches.includes(523)) {
+                    resultDiv.innerHTML += '<br>10月13日、天秤座';
+                }
+                if (matches.includes(525)) {
+                    resultDiv.innerHTML += '<br>5月15日、金牛座';
+                }
+                if (matches.includes(530)) {
+                    resultDiv.innerHTML += '<br>8月14日、獅子座';
+                }
+                if (matches.includes(532)) {
+                    resultDiv.innerHTML += '<br>3月16日、雙魚座';
+                }
+                if (matches.includes(535)) {
+                    resultDiv.innerHTML += '<br>11月13日、天秤座';
+                }
+                if (matches.includes(537)) {
+                    resultDiv.innerHTML += '<br>6月15日、雙子座';
+                }
+                if (matches.includes(539)) {
+                    resultDiv.innerHTML += '<br>1月17日、摩羯座';
+                }
+                if (matches.includes(542)) {
+                    resultDiv.innerHTML += '<br>9月14日、處女座';
+                }
+                if (matches.includes(544)) {
+                    resultDiv.innerHTML += '<br>4月16日、白羊座';
+                }
+                if (matches.includes(547)) {
+                    resultDiv.innerHTML += '<br>12月13日、射手座';
+                }
+                if (matches.includes(549)) {
+                    resultDiv.innerHTML += '<br>7月15日、巨蠍座';
+                }
+                if (matches.includes(551)) {
+                    resultDiv.innerHTML += '<br>2月17日、水瓶座';
+                }
+                if (matches.includes(554)) {
+                    resultDiv.innerHTML += '<br>10月14日、天秤座';
+                }
+                if (matches.includes(556)) {
+                    resultDiv.innerHTML += '<br>5月16日、金牛座';
+                }
+                if (matches.includes(561)) {
+                    resultDiv.innerHTML += '<br>8月15日、獅子座';
+                }
+                if (matches.includes(563)) {
+                    resultDiv.innerHTML += '<br>3月17日、雙魚座';
+                }
+                if (matches.includes(566)) {
+                    resultDiv.innerHTML += '<br>11月14日、天蠍座';
+                }
+                if (matches.includes(568)) {
+                    resultDiv.innerHTML += '<br>6月16日、雙子座';
+                }
+                if (matches.includes(570)) {
+                    resultDiv.innerHTML += '<br>1月18日、摩羯座';
+                }
+                if (matches.includes(573)) {
+                    resultDiv.innerHTML += '<br>9月15日、處女座';
+                }
+                if (matches.includes(575)) {
+                    resultDiv.innerHTML += '<br>4月17日、白羊座';
+                }
+                if (matches.includes(578)) {
+                    resultDiv.innerHTML += '<br>12月14日、射手座';
+                }
+                if (matches.includes(580)) {
+                    resultDiv.innerHTML += '<br>7月16日、巨蠍座';
+                }
+                if (matches.includes(582)) {
+                    resultDiv.innerHTML += '<br>2月18日、水瓶座';
+                }
+                if (matches.includes(585)) {
+                    resultDiv.innerHTML += '<br>10月15日、天秤座';
+                }
+                if (matches.includes(587)) {
+                    resultDiv.innerHTML += '<br>5月17日、金牛座';
+                }
+                if (matches.includes(592)) {
+                    resultDiv.innerHTML += '<br>8月16日、獅子座';
+                }
+                if (matches.includes(594)) {
+                    resultDiv.innerHTML += '<br>3月18日、雙魚座';
+                }
+                if (matches.includes(597)) {
+                    resultDiv.innerHTML += '<br>11月15日、天蠍座';
+                }
+                if (matches.includes(599)) {
+                    resultDiv.innerHTML += '<br>6月17日、雙子座';
+                }
+                if (matches.includes(601)) {
+                    resultDiv.innerHTML += '<br>1月19日、摩羯座';
+                }
+                if (matches.includes(604)) {
+                    resultDiv.innerHTML += '<br>9月16日、處女座';
+                }
+                if (matches.includes(606)) {
+                    resultDiv.innerHTML += '<br>4月18日、白羊座';
+                }
+                if (matches.includes(609)) {
+                    resultDiv.innerHTML += '<br>12月15日、射手座';
+                }
+                if (matches.includes(611)) {
+                    resultDiv.innerHTML += '<br>7月17日、巨蟹座';
+                }
+                if (matches.includes(613)) {
+                    resultDiv.innerHTML += '<br>2月19日、雙魚座';
+                }
+                if (matches.includes(616)) {
+                    resultDiv.innerHTML += '<br>10月16日、天秤座';
+                }
+                if (matches.includes(618)) {
+                    resultDiv.innerHTML += '<br>5月18日、金牛座';
+                }
+                if (matches.includes(623)) {
+                    resultDiv.innerHTML += '<br>8月17日、獅子座';
+                }
+                if (matches.includes(625)) {
+                    resultDiv.innerHTML += '<br>3月19日、雙魚座';
+                }
+                if (matches.includes(628)) {
+                    resultDiv.innerHTML += '<br>11月16日、天蠍座';
+                }
+                if (matches.includes(630)) {
+                    resultDiv.innerHTML += '<br>6月18日、雙子座';
+                }
+                if (matches.includes(632)) {
+                    resultDiv.innerHTML += '<br>1月20日、水瓶座';
+                }
+                if (matches.includes(635)) {
+                    resultDiv.innerHTML += '<br>9月17日、處女座';
+                }
+                if (matches.includes(637)) {
+                    resultDiv.innerHTML += '<br>4月19日、白羊座';
+                }
+                if (matches.includes(640)) {
+                    resultDiv.innerHTML += '<br>12月16日、射手座';
+                }
+                if (matches.includes(642)) {
+                    resultDiv.innerHTML += '<br>7月18日、巨蟹座';
+                }
+                if (matches.includes(644)) {
+                    resultDiv.innerHTML += '<br>2月20日、雙魚座';
+                }
+                if (matches.includes(647)) {
+                    resultDiv.innerHTML += '<br>10月17日、天秤座';
+                }
+                if (matches.includes(649)) {
+                    resultDiv.innerHTML += '<br>5月19日、金牛座';
+                }
+                if (matches.includes(654)) {
+                    resultDiv.innerHTML += '<br>8月18日、獅子座';
+                }
+                if (matches.includes(656)) {
+                    resultDiv.innerHTML += '<br>3月20日、雙魚座';
+                }
+                if (matches.includes(659)) {
+                    resultDiv.innerHTML += '<br>11月17日、天蠍座';
+                }
+                if (matches.includes(661)) {
+                    resultDiv.innerHTML += '<br>6月19日、雙子座';
+                }
+                if (matches.includes(663)) {
+                    resultDiv.innerHTML += '<br>1月21日、水瓶座';
+                }
+                if (matches.includes(666)) {
+                    resultDiv.innerHTML += '<br>9月18日、處女座';
+                }
+                if (matches.includes(668)) {
+                    resultDiv.innerHTML += '<br>4月20日、金牛座';
+                }
+                if (matches.includes(671)) {
+                    resultDiv.innerHTML += '<br>12月17日、射手座';
+                }
+                if (matches.includes(673)) {
+                    resultDiv.innerHTML += '<br>7月19日、巨蠍座';
+                }
+                if (matches.includes(675)) {
+                    resultDiv.innerHTML += '<br>2月21日、雙魚座';
+                }
+                if (matches.includes(678)) {
+                    resultDiv.innerHTML += '<br>10月18日、天秤座';
+                }
+                if (matches.includes(680)) {
+                    resultDiv.innerHTML += '<br>5月20日、金牛座';
+                }
+                if (matches.includes(685)) {
+                    resultDiv.innerHTML += '<br>8月19日、獅子座';
+                }
+                if (matches.includes(687)) {
+                    resultDiv.innerHTML += '<br>3月21日、白羊座';
+                }
+                if (matches.includes(690)) {
+                    resultDiv.innerHTML += '<br>11月18日、天蠍座';
+                }
+                if (matches.includes(692)) {
+                    resultDiv.innerHTML += '<br>6月20日、雙子座';
+                }
+                if (matches.includes(694)) {
+                    resultDiv.innerHTML += '<br>1月22日、水瓶座';
+                }
+                if (matches.includes(697)) {
+                    resultDiv.innerHTML += '<br>9月19日、處女座';
+                }
+                if (matches.includes(699)) {
+                    resultDiv.innerHTML += '<br>4月21日、金牛座';
+                }
+                if (matches.includes(702)) {
+                    resultDiv.innerHTML += '<br>12月18日、射手座';
+                }
+                if (matches.includes(704)) {
+                    resultDiv.innerHTML += '<br>7月20日、巨蟹座';
+                }
+                if (matches.includes(706)) {
+                    resultDiv.innerHTML += '<br>2月22日、雙魚座';
+                }
+                if (matches.includes(709)) {
+                    resultDiv.innerHTML += '<br>10月19日、天秤座';
+                }
+                if (matches.includes(711)) {
+                    resultDiv.innerHTML += '<br>5月21日、雙子座';
+                }
+                if (matches.includes(716)) {
+                    resultDiv.innerHTML += '<br>8月20日、獅子座';
+                }
+                if (matches.includes(718)) {
+                    resultDiv.innerHTML += '<br>3月22日、白羊座';
+                }
+                if (matches.includes(721)) {
+                    resultDiv.innerHTML += '<br>11月19日、天蠍座';
+                }
+                if (matches.includes(723)) {
+                    resultDiv.innerHTML += '<br>6月21日、雙子座';
+                }
+                if (matches.includes(725)) {
+                    resultDiv.innerHTML += '<br>1月23日、水瓶座';
+                }
+                if (matches.includes(728)) {
+                    resultDiv.innerHTML += '<br>9月20日、處女座';
+                }
+                if (matches.includes(730)) {
+                    resultDiv.innerHTML += '<br>4月22日、金牛座';
+                }
+                if (matches.includes(733)) {
+                    resultDiv.innerHTML += '<br>12月19日、射手座';
+                }
+                if (matches.includes(735)) {
+                    resultDiv.innerHTML += '<br>7月21日、巨蠍座';
+                }
+                if (matches.includes(737)) {
+                    resultDiv.innerHTML += '<br>2月23日、雙魚座';
+                }
+                if (matches.includes(740)) {
+                    resultDiv.innerHTML += '<br>10月20日、天秤座';
+                }
+                if (matches.includes(742)) {
+                    resultDiv.innerHTML += '<br>5月22日、雙子座';
+                }
+                if (matches.includes(747)) {
+                    resultDiv.innerHTML += '<br>8月21日、獅子座';
+                }
+                if (matches.includes(749)) {
+                    resultDiv.innerHTML += '<br>3月23日、白羊座';
+                }
+                if (matches.includes(752)) {
+                    resultDiv.innerHTML += '<br>11月20日、天蠍座';
+                }
+                if (matches.includes(754)) {
+                    resultDiv.innerHTML += '<br>6月22日、巨蠍座';
+                }
+                if (matches.includes(756)) {
+                    resultDiv.innerHTML += '<br>1月24日、水瓶座';
+                }
+                if (matches.includes(759)) {
+                    resultDiv.innerHTML += '<br>9月21日、處女座';
+                }
+                if (matches.includes(761)) {
+                    resultDiv.innerHTML += '<br>4月23日、金牛座';
+                }
+                if (matches.includes(764)) {
+                    resultDiv.innerHTML += '<br>12月20日、射手座';
+                }
+                if (matches.includes(766)) {
+                    resultDiv.innerHTML += '<br>7月22日、巨蠍座';
+                }
+                if (matches.includes(768)) {
+                    resultDiv.innerHTML += '<br>2月24日、雙魚座';
+                }
+                if (matches.includes(771)) {
+                    resultDiv.innerHTML += '<br>10月21日、天秤座';
+                }
+                if (matches.includes(773)) {
+                    resultDiv.innerHTML += '<br>5月23日、雙子座';
+                }
+                if (matches.includes(778)) {
+                    resultDiv.innerHTML += '<br>8月22日、獅子座';
+                }
+                if (matches.includes(780)) {
+                    resultDiv.innerHTML += '<br>3月24日、白羊座';
+                }
+                if (matches.includes(783)) {
+                    resultDiv.innerHTML += '<br>11月21日、天蠍座';
+                }
+                if (matches.includes(785)) {
+                    resultDiv.innerHTML += '<br>6月23日、巨蠍座';
+                }
+                if (matches.includes(787)) {
+                    resultDiv.innerHTML += '<br>1月25日、水瓶座';
+                }
+                if (matches.includes(790)) {
+                    resultDiv.innerHTML += '<br>9月22日、處女座';
+                }
+                if (matches.includes(792)) {
+                    resultDiv.innerHTML += '<br>4月24日、金牛座';
+                }
+                if (matches.includes(795)) {
+                    resultDiv.innerHTML += '<br>12月21日、射手座';
+                }
+                if (matches.includes(797)) {
+                    resultDiv.innerHTML += '<br>7月23日、獅子座';
+                }
+                if (matches.includes(799)) {
+                    resultDiv.innerHTML += '<br>2月25日、雙魚座';
+                }
+                if (matches.includes(802)) {
+                    resultDiv.innerHTML += '<br>10月22日、天秤座';
+                }
+                if (matches.includes(804)) {
+                    resultDiv.innerHTML += '<br>5月24日、雙子座';
+                }
+                if (matches.includes(809)) {
+                    resultDiv.innerHTML += '<br>8月23日、處女座';
+                }
+                if (matches.includes(811)) {
+                    resultDiv.innerHTML += '<br>3月25日、白羊座';
+                }
+                if (matches.includes(814)) {
+                    resultDiv.innerHTML += '<br>11月22日、射手座';
+                }
+                if (matches.includes(816)) {
+                    resultDiv.innerHTML += '<br>6月24日、巨蠍座';
+                }
+                if (matches.includes(818)) {
+                    resultDiv.innerHTML += '<br>1月26日、水瓶座';
+                }
+                if (matches.includes(821)) {
+                    resultDiv.innerHTML += '<br>9月23日、天秤座';
+                }
+                if (matches.includes(823)) {
+                    resultDiv.innerHTML += '<br>4月25日、金牛座';
+                }
+                if (matches.includes(826)) {
+                    resultDiv.innerHTML += '<br>12月22日、摩羯座';
+                }
+                if (matches.includes(828)) {
+                    resultDiv.innerHTML += '<br>7月24日、獅子座';
+                }
+                if (matches.includes(830)) {
+                    resultDiv.innerHTML += '<br>2月26日、雙魚座';
+                }
+                if (matches.includes(833)) {
+                    resultDiv.innerHTML += '<br>10月23日、天蠍座';
+                }
+                if (matches.includes(835)) {
+                    resultDiv.innerHTML += '<br>5月25日、雙子座';
+                }
+                if (matches.includes(840)) {
+                    resultDiv.innerHTML += '<br>8月24日、處女座';
+                }
+                if (matches.includes(842)) {
+                    resultDiv.innerHTML += '<br>3月26日、白羊座';
+                }
+                if (matches.includes(845)) {
+                    resultDiv.innerHTML += '<br>11月23日、射手座';
+                }
+                if (matches.includes(847)) {
+                    resultDiv.innerHTML += '<br>6月25日、巨蠍座';
+                }
+                if (matches.includes(849)) {
+                    resultDiv.innerHTML += '<br>1月27日、水瓶座';
+                }
+                if (matches.includes(852)) {
+                    resultDiv.innerHTML += '<br>9月24日、天秤座';
+                }
+                if (matches.includes(854)) {
+                    resultDiv.innerHTML += '<br>4月26日、金牛座';
+                }
+                if (matches.includes(857)) {
+                    resultDiv.innerHTML += '<br>12月23日、摩羯座';
+                }
+                if (matches.includes(859)) {
+                    resultDiv.innerHTML += '<br>7月25日、獅子座';
+                }
+                if (matches.includes(861)) {
+                    resultDiv.innerHTML += '<br>2月27日、雙魚座';
+                }
+                if (matches.includes(864)) {
+                    resultDiv.innerHTML += '<br>10月24日、天蠍座';
+                }
+                if (matches.includes(866)) {
+                    resultDiv.innerHTML += '<br>5月26日、雙子座';
+                }
+                if (matches.includes(871)) {
+                    resultDiv.innerHTML += '<br>8月25日、處女座';
+                }
+                if (matches.includes(873)) {
+                    resultDiv.innerHTML += '<br>3月27日、白羊座';
+                }
+                if (matches.includes(876)) {
+                    resultDiv.innerHTML += '<br>11月24日、射手座';
+                }
+                if (matches.includes(878)) {
+                    resultDiv.innerHTML += '<br>6月26日、巨蟹座';
+                }
+                if (matches.includes(880)) {
+                    resultDiv.innerHTML += '<br>1月28日、水瓶座';
+                }
+                if (matches.includes(883)) {
+                    resultDiv.innerHTML += '<br>9月25日、天秤座';
+                }
+                if (matches.includes(885)) {
+                    resultDiv.innerHTML += '<br>4月27日、金牛座';
+                }
+                if (matches.includes(888)) {
+                    resultDiv.innerHTML += '<br>12月24日、摩羯座';
+                }
+                if (matches.includes(890)) {
+                    resultDiv.innerHTML += '<br>7月26日、獅子座';
+                }
+                if (matches.includes(892)) {
+                    resultDiv.innerHTML += '<br>2月28日、雙魚座';
+                }
+                if (matches.includes(895)) {
+                    resultDiv.innerHTML += '<br>10月25日、天蠍座';
+                }
+                if (matches.includes(897)) {
+                    resultDiv.innerHTML += '<br>5月27日、雙子座';
+                }
+                if (matches.includes(902)) {
+                    resultDiv.innerHTML += '<br>8月26日、處女座';
+                }
+                if (matches.includes(904)) {
+                    resultDiv.innerHTML += '<br>3月28日、白羊座';
+                }
+                if (matches.includes(907)) {
+                    resultDiv.innerHTML += '<br>11月25日、射手座';
+                }
+                if (matches.includes(909)) {
+                    resultDiv.innerHTML += '<br>6月27日、巨蠍座';
+                }
+                if (matches.includes(911)) {
+                    resultDiv.innerHTML += '<br>1月29日、水瓶座';
+                }
+                if (matches.includes(914)) {
+                    resultDiv.innerHTML += '<br>9月26日、天秤座';
+                }
+                if (matches.includes(916)) {
+                    resultDiv.innerHTML += '<br>4月28日、金牛座';
+                }
+                if (matches.includes(919)) {
+                    resultDiv.innerHTML += '<br>12月25日、摩羯座';
+                }
+                if (matches.includes(921)) {
+                    resultDiv.innerHTML += '<br>7月27日、獅子座';
+                }
+                if (matches.includes(926)) {
+                    resultDiv.innerHTML += '<br>10月26日、天蠍座';
+                }
+                if (matches.includes(928)) {
+                    resultDiv.innerHTML += '<br>5月28日、雙子座';
+                }
+                if (matches.includes(933)) {
+                    resultDiv.innerHTML += '<br>8月27日、處女座';
+                }
+                if (matches.includes(935)) {
+                    resultDiv.innerHTML += '<br>3月29日、白羊座';
+                }
+                if (matches.includes(938)) {
+                    resultDiv.innerHTML += '<br>11月26日、射手座';
+                }
+                if (matches.includes(940)) {
+                    resultDiv.innerHTML += '<br>6月28日、巨蟹座';
+                }
+                if (matches.includes(942)) {
+                    resultDiv.innerHTML += '<br>1月30日、水瓶座';
+                }
+                if (matches.includes(945)) {
+                    resultDiv.innerHTML += '<br>9月27日、天秤座';
+                }
+                if (matches.includes(947)) {
+                    resultDiv.innerHTML += '<br>4月29日、金牛座';
+                }
+                if (matches.includes(950)) {
+                    resultDiv.innerHTML += '<br>12月26日、摩羯座';
+                }
+                if (matches.includes(952)) {
+                    resultDiv.innerHTML += '<br>7月28日、獅子座';
+                }
+                if (matches.includes(957)) {
+                    resultDiv.innerHTML += '<br>10月27日、天蠍座';
+                }
+                if (matches.includes(959)) {
+                    resultDiv.innerHTML += '<br>5月29日、雙子座';
+                }
+                if (matches.includes(964)) {
+                    resultDiv.innerHTML += '<br>8月28日、處女座';
+                }
+                if (matches.includes(966)) {
+                    resultDiv.innerHTML += '<br>3月30日、白羊座';
+                }
+                if (matches.includes(969)) {
+                    resultDiv.innerHTML += '<br>11月27日、射手座';
+                }
+                if (matches.includes(971)) {
+                    resultDiv.innerHTML += '<br>6月29日、巨蟹座';
+                }
+                if (matches.includes(973)) {
+                    resultDiv.innerHTML += '<br>1月31日、水瓶座';
+                }
+                if (matches.includes(976)) {
+                    resultDiv.innerHTML += '<br>9月28日、天秤座';
+                }
+                if (matches.includes(978)) {
+                    resultDiv.innerHTML += '<br>4月30日、金牛座';
+                }
+                if (matches.includes(981)) {
+                    resultDiv.innerHTML += '<br>12月27日、摩羯座';
+                }
+                if (matches.includes(983)) {
+                    resultDiv.innerHTML += '<br>7月29日、獅子座';
+                }
+                if (matches.includes(988)) {
+                    resultDiv.innerHTML += '<br>10月28日、天蠍座';
+                }
+                if (matches.includes(990)) {
+                    resultDiv.innerHTML += '<br>5月30日、雙子座';
+                }
+                if (matches.includes(995)) {
+                    resultDiv.innerHTML += '<br>8月29日、處女座';
+                }
+                if (matches.includes(997)) {
+                    resultDiv.innerHTML += '<br>3月31日、白羊座';
+                }
+
+            } else {
+                resultDiv.innerHTML = '無匹配';
+            }
+        }
+    </script>
+</body>
+</html>
