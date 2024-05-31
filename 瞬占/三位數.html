@@ -5,7 +5,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta charset="UTF-8">
-    <title>三位數匹配</title>
+    <title>瞬占</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -45,7 +45,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>三位數匹配</h1>
+        <h1>瞬占</h1>
         <div class="input-group">
             <label for="sum">十位數+百位數相加總合 (A):</label>
             <input type="number" id="sum" required>
@@ -54,7 +54,7 @@
             <label for="product">十位數+個位數相加總合 (B):</label>
             <input type="number" id="product" required>
         </div>
-        <button onclick="findMatchingNumbers()">提交</button>
+        <button onclick="findMatchingNumbers()">計算</button>
         <div class="result" id="result"></div>
     </div>
 
@@ -359,6 +359,18 @@
                 }
                 if (matches.includes(322)) {
                     resultDiv.innerHTML += '<br>1月10日、摩羯座';
+                }
+                if (matches.includes(325)) {
+                    resultDiv.innerHTML += '<br>9月7日、處女座';
+                }
+                if (matches.includes(327)) {
+                    resultDiv.innerHTML += '<br>4月9日、白羊座';
+                }
+                if (matches.includes(330)) {
+                    resultDiv.innerHTML += '<br>12月6日、射手座';
+                }
+                if (matches.includes(332)) {
+                    resultDiv.innerHTML += '<br>7月8日、巨蟹座';
                 }
                 if (matches.includes(334)) {
                     resultDiv.innerHTML += '<br>2月10日、水瓶座';

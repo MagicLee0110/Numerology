@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>瞬占</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>瞬占</h1>
+        <div class="input-group">
+            <label for="sum">每一位數加總的合 (A):</label>
+            <input type="number" id="sum" required>
+        </div>
+        <button onclick="findMatchingNumbers()">計算</button>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        const numbers = [
+            43, 55, 67, 74, 79, 86, 91, 98, 1000, 1002, // ... continue adding up to 300 numbers
+            1007, 1012, 1014, 1019, 1021, 1026, 1031, 1038, 1043, 1045,
+            1050, 1057, 1062, 1074, 1081, 1105, 
+            // ... Add all 300 numbers here
+        ];
+
+        function findMatchingNumbers() {
+            const sumInput = document.getElementById('sum').value;
+            const resultDiv = document.getElementById('result');
+            const sum = parseInt(sumInput, 10);
+
+            const matches = numbers.filter(num => {
+                const digits = String(num).split('').map(Number);
+                const digitsSum = digits.reduce((a, b) => a + b, 0);
+                return digitsSum === sum;
+            });
+
+            if (matches.length > 0) {
+                let resultHtml = `匹配的數字: ${matches.join(', ')}`;
+                if (matches.includes(43)) {
+                    resultHtml += '<br>1月1日、摩羯座';
+                }
+                if (matches.includes(55)) {
+                    resultHtml += '<br>2月1日、水瓶座';
+                }
+                if (matches.includes(67)) {
+                    resultHtml += '<br>3月1日、雙魚座';
+                }
+                if (matches.includes(74)) {
+                    resultHtml += '<br>1月2日、摩羯座';
+                }
+                if (matches.includes(79)) {
+                    resultHtml += '<br>4月1日、白羊座';
+                }
+                if (matches.includes(86)) {
+                    resultHtml += '<br>2月2日、水瓶座';
+                }
+                if (matches.includes(91)) {
+                    resultHtml += '<br>5月1日、金牛座';
+                }
+                if (matches.includes(98)) {
+                    resultHtml += '<br>3月2日、雙魚座';
+                }
+                if (matches.includes(1000)) {
+                    resultHtml += '<br>11月28日、射手座';
+                }
+                if (matches.includes(1002)) {
+                    resultHtml += '<br>6月30日、巨蠍座';
+                }
+                if (matches.includes(1007)) {
+                    resultHtml += '<br>9月29日、天秤座';
+                }
+                if (matches.includes(1012)) {
+                    resultHtml += '<br>12月28日、摩羯座';
+                }
+                if (matches.includes(1014)) {
+                    resultHtml += '<br>7月30日、獅子座';
+                }
+                if (matches.includes(1019)) {
+                    resultHtml += '<br>10月29日、天蠍座';
+                }
+                if (matches.includes(1021)) {
+                    resultHtml += '<br>5月31日、雙子座';
+                }
+                if (matches.includes(1026)) {
+                    resultHtml += '<br>8月30日、處女座';
+                }
+                if (matches.includes(1031)) {
+                    resultHtml += '<br>11月29日、射手座';
+                }
+                if (matches.includes(1038)) {
+                    resultHtml += '<br>9月30日、天秤座';
+                }
+                if (matches.includes(1043)) {
+                    resultHtml += '<br>12月29日、摩羯座';
+                }
+                if (matches.includes(1045)) {
+                    resultHtml += '<br>7月31日、獅子座';
+                }
+                if (matches.includes(1050)) {
+                    resultHtml += '<br>10月30日、天蠍座';
+                }
+                if (matches.includes(1057)) {
+                    resultHtml += '<br>8月31日、處女座';
+                }
+                if (matches.includes(1062)) {
+                    resultHtml += '<br>11月30日、射手座';
+                }
+                if (matches.includes(1074)) {
+                    resultHtml += '<br>12月30日、摩羯座';
+                }
+                if (matches.includes(1081)) {
+                    resultHtml += '<br>10月31日、天蠍座';
+                }
+                if (matches.includes(1105)) {
+                    resultHtml += '<br>12月31日、摩羯座';
+                }
+
+                resultDiv.innerHTML = resultHtml;
+            } else {
+                resultDiv.innerHTML = '無匹配';
+            }
+        }
+    </script>
+</body>
+</html>
